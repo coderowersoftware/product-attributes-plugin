@@ -1,0 +1,5 @@
+/* Minimal styles for Extra Attributes admin UI */
+#ecv-extra-attrs-admin .ecv-extra-attr { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; background: #fff; }
+#ecv-extra-attrs-admin .ecv-extra-attr-header { display: flex; align-items: center; gap: 6px; }
+#ecv-extra-attrs-admin input[type=text] { min-width: 260px; }
+#ecv-extra-attrs-admin .ecv-extra-variants .ecv-extra-variant { margin: 6px 0; }

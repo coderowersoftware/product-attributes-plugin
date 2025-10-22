@@ -1,0 +1,49 @@
+#ecv-extra-attributes { margin-top: 16px; margin-bottom: 16px; }
+#ecv-extra-attributes .ecv-extra-attr { margin-bottom: 15px; }
+#ecv-extra-attributes .ecv-extra-label { font-weight: 600; margin-bottom: 8px; color: #333; font-size: 14px; }
+#ecv-extra-attributes .ecv-extra-variants { display: flex; flex-wrap: wrap; gap: 8px; }
+#ecv-extra-attributes .ecv-extra-btn { 
+  padding: 8px 16px; 
+  border: 1px solid #ddd; 
+  background: #fff; 
+  color: #333; 
+  cursor: pointer; 
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  font-size: 14px;
+}
+#ecv-extra-attributes .ecv-extra-btn:hover { 
+  border-color: #999; 
+  background: #f8f8f8;
+}
+#ecv-extra-attributes .ecv-extra-btn.active { 
+  background: #222; 
+  color: #fff !important; 
+  border-color: #222; 
+}
+#ecv-extra-attributes .ecv-extra-radio label { 
+  margin-right: 15px; 
+  display: inline-block; 
+  cursor: pointer; 
+  color: #333;
+}
+#ecv-extra-attributes .ecv-extra-select { 
+  min-width: 200px; 
+  padding: 8px 12px; 
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  color: #333;
+}
+
+/* Price display area */
+#ecv-extra-price-display {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Admin panel styling for price inputs */
+.ecv-extra-variant-price { font-family: monospace; }

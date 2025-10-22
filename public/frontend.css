@@ -1,0 +1,1068 @@
+/* Elementor Pro Compatibility - High Specificity Selectors */
+body #ecv-frontend-variations,
+.elementor-widget-container #ecv-frontend-variations,
+.elementor #ecv-frontend-variations { 
+    margin-bottom: 20px !important; 
+    clear: both !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body .ecv-attr-group,
+.elementor-widget-container .ecv-attr-group,
+.elementor .ecv-attr-group { 
+    margin-bottom: 18px !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transition: opacity 0.3s ease, max-height 0.3s ease !important;
+    overflow: hidden !important;
+}
+
+/* Hidden state for attributes with no values */
+body .ecv-attr-group[style*="display: none"],
+.elementor-widget-container .ecv-attr-group[style*="display: none"],
+.elementor .ecv-attr-group[style*="display: none"] {
+    opacity: 0 !important;
+    max-height: 0 !important;
+    margin-bottom: 0 !important;
+    pointer-events: none !important;
+}
+
+body .ecv-attr-label,
+.elementor-widget-container .ecv-attr-label,
+.elementor .ecv-attr-label { 
+    font-weight: 600 !important; 
+    margin-bottom: 8px !important; 
+    font-size: 1.1em !important; 
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Button variants - Armac Martin grid layout */
+body .ecv-button-variants,
+.elementor-widget-container .ecv-button-variants,
+.elementor .ecv-button-variants { 
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    margin-top: 15px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+/* Dropdown variants - Clean Armac Martin Design */
+body .ecv-variants-select,
+.elementor-widget-container .ecv-variants-select,
+.elementor .ecv-variants-select {
+    width: 100% !important;
+    max-width: 300px !important;
+    padding: 8px 30px 8px 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    border-radius: 0 !important;
+    font-size: 1em !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    font-family: inherit !important;
+    line-height: 1.5 !important;
+    margin: 8px 0 !important;
+    color: #333 !important;
+    font-weight: 400 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23999" d="m2 0-2 2h4zm0 5 2-2h-4z"/></svg>') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 8px center !important;
+    background-size: 10px !important;
+}
+
+body .ecv-variants-select:focus,
+.elementor-widget-container .ecv-variants-select:focus,
+.elementor .ecv-variants-select:focus {
+    outline: none !important;
+    border-bottom-color: #333 !important;
+    background-color: rgba(0,0,0,0.02) !important;
+}
+
+body .ecv-variants-select:hover,
+.elementor-widget-container .ecv-variants-select:hover,
+.elementor .ecv-variants-select:hover {
+    border-bottom-color: #666 !important;
+    background-color: rgba(0,0,0,0.01) !important;
+}
+
+body .ecv-variants-select:disabled,
+.elementor-widget-container .ecv-variants-select:disabled,
+.elementor .ecv-variants-select:disabled {
+    background: #f5f5f5 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7 !important;
+}
+
+/* Radio button variants - Clean inline layout */
+body .ecv-radio-variants,
+.elementor-widget-container .ecv-radio-variants,
+.elementor .ecv-radio-variants {
+    display: block !important;
+    line-height: 1.6 !important;
+}
+
+body .ecv-radio-label,
+.elementor-widget-container .ecv-radio-label,
+.elementor .ecv-radio-label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    background: transparent !important;
+    min-width: auto !important;
+    margin-right: 20px !important;
+    margin-bottom: 5px !important;
+    color: #666 !important;
+    font-weight: 400 !important;
+    position: relative !important;
+}
+
+body .ecv-radio-label:hover,
+.elementor-widget-container .ecv-radio-label:hover,
+.elementor .ecv-radio-label:hover {
+    color: #333 !important;
+    background: rgba(0,0,0,0.02) !important;
+}
+
+body .ecv-radio-label.selected,
+.elementor-widget-container .ecv-radio-label.selected,
+.elementor .ecv-radio-label.selected {
+    color: #333 !important;
+    background: rgba(0,0,0,0.05) !important;
+    font-weight: 500 !important;
+}
+
+/* Remove underlines for selected radio labels - no underlines needed */
+body .ecv-radio-label.selected:after,
+.elementor-widget-container .ecv-radio-label.selected:after,
+.elementor .ecv-radio-label.selected:after {
+    display: none !important;
+    content: none !important;
+}
+
+body .ecv-radio-label.disabled,
+.elementor-widget-container .ecv-radio-label.disabled,
+.elementor .ecv-radio-label.disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: #f5f5f5 !important;
+}
+
+body .ecv-variant-radio,
+.elementor-widget-container .ecv-variant-radio,
+.elementor .ecv-variant-radio {
+    margin: 0 !important;
+    transform: scale(1.2) !important;
+}
+
+body .ecv-variant-name,
+.elementor-widget-container .ecv-variant-name,
+.elementor .ecv-variant-name {
+    font-size: 0.95em !important;
+}
+
+body .ecv-variant-image,
+.elementor-widget-container .ecv-variant-image,
+.elementor .ecv-variant-image {
+    max-width: 24px !important;
+    max-height: 24px !important;
+    border-radius: 3px !important;
+    object-fit: cover !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+    border: none !important;
+}
+
+body .ecv-variant-btn,
+.elementor-widget-container .ecv-variant-btn,
+.elementor .ecv-variant-btn { 
+    background: transparent !important; 
+    border: none !important; 
+    border-radius: 0 !important; 
+    padding: 12px 8px !important; 
+    cursor: pointer !important; 
+    font-size: 0.85em !important; 
+    transition: all 0.3s ease !important;
+    display: inline-flex !important; 
+    flex-direction: column !important;
+    align-items: center !important; 
+    justify-content: center !important;
+    color: #666 !important;
+    text-align: center !important;
+    overflow: visible !important;
+    width: 130px !important;
+    min-width: 130px !important;
+    height: 90px !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+    line-height: 1.2 !important;
+    margin-right: 12px !important;
+    margin-bottom: 12px !important;
+    text-decoration: none !important;
+    position: relative !important;
+    font-weight: 400 !important;
+}
+
+body .ecv-variant-btn:not(.disabled):hover,
+.elementor-widget-container .ecv-variant-btn:not(.disabled):hover,
+.elementor .ecv-variant-btn:not(.disabled):hover { 
+    color: #333 !important;
+    background: rgba(0,0,0,0.02) !important;
+    transform: translateY(-1px) !important;
+}
+
+body .ecv-variant-btn.active,
+.elementor-widget-container .ecv-variant-btn.active,
+.elementor .ecv-variant-btn.active { 
+    color: #333 !important;
+    background: rgba(0,0,0,0.05) !important;
+    font-weight: 500 !important;
+}
+
+/* Remove underlines for active buttons - no underlines needed */
+body .ecv-variant-btn.active:after,
+.elementor-widget-container .ecv-variant-btn.active:after,
+.elementor .ecv-variant-btn.active:after {
+    display: none !important;
+    content: none !important;
+}
+
+body .ecv-variant-btn.disabled,
+.elementor-widget-container .ecv-variant-btn.disabled,
+.elementor .ecv-variant-btn.disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    color: #999 !important;
+}
+
+/* Reset option styling - keep clickable but no visual changes */
+body .ecv-variant-btn.ecv-reset-option,
+.elementor-widget-container .ecv-variant-btn.ecv-reset-option,
+.elementor .ecv-variant-btn.ecv-reset-option {
+    /* No visual differences - behaves like normal button */
+    cursor: pointer !important;
+}
+
+/* Hide ONLY the variation details summary (the text showing selected options) */
+div#ecv-variation-details {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Armac Martin style image layout - image above text */
+body .ecv-variant-btn .ecv-image-container,
+.elementor-widget-container .ecv-variant-btn .ecv-image-container,
+.elementor .ecv-variant-btn .ecv-image-container {
+    width: 50px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 4px !important;
+    margin-bottom: 8px !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+body .ecv-variant-btn img,
+.elementor-widget-container .ecv-variant-btn img,
+.elementor .ecv-variant-btn img { 
+    max-width: 50px !important; 
+    max-height: 50px !important; 
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Additional image border removal for all states */
+body .ecv-variant-btn img:hover,
+.elementor-widget-container .ecv-variant-btn img:hover,
+.elementor .ecv-variant-btn img:hover,
+body .ecv-variant-btn.active img,
+.elementor-widget-container .ecv-variant-btn.active img,
+.elementor .ecv-variant-btn.active img,
+body .ecv-variant-btn:focus img,
+.elementor-widget-container .ecv-variant-btn:focus img,
+.elementor .ecv-variant-btn:focus img {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Universal image border removal for all plugin images */
+#ecv-frontend-variations img,
+#ecv-frontend-variations * img,
+.ecv-frontend-variations img,
+.ecv-frontend-variations * img {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Aggressive border removal for live site theme conflicts */
+body .ecv-variant-btn,
+body .ecv-variant-btn *,
+.elementor-widget-container .ecv-variant-btn,
+.elementor-widget-container .ecv-variant-btn *,
+.elementor .ecv-variant-btn,
+.elementor .ecv-variant-btn *,
+.woocommerce .ecv-variant-btn,
+.woocommerce .ecv-variant-btn *,
+.entry-content .ecv-variant-btn,
+.entry-content .ecv-variant-btn *,
+.content .ecv-variant-btn,
+.content .ecv-variant-btn *,
+.site-content .ecv-variant-btn,
+.site-content .ecv-variant-btn * {
+    border: 0 !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+}
+
+/* Specific overrides for button states that themes might target */
+body .ecv-variant-btn:hover,
+body .ecv-variant-btn:focus,
+body .ecv-variant-btn:active,
+body .ecv-variant-btn.active,
+body .ecv-variant-btn.selected,
+.elementor-widget-container .ecv-variant-btn:hover,
+.elementor-widget-container .ecv-variant-btn:focus,
+.elementor-widget-container .ecv-variant-btn:active,
+.elementor-widget-container .ecv-variant-btn.active,
+.elementor-widget-container .ecv-variant-btn.selected {
+    border: 0 !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Aggressive image border removal for all states and theme conflicts */
+body img.ecv-variant-image,
+body .ecv-variant-btn img,
+body .ecv-image-container img,
+.elementor-widget-container img.ecv-variant-image,
+.elementor-widget-container .ecv-variant-btn img,
+.elementor-widget-container .ecv-image-container img,
+.woocommerce img.ecv-variant-image,
+.woocommerce .ecv-variant-btn img,
+.woocommerce .ecv-image-container img,
+.entry-content img.ecv-variant-image,
+.entry-content .ecv-variant-btn img,
+.entry-content .ecv-image-container img {
+    border: 0 !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+}
+
+/* Armac Martin variant name styling - text below image */
+body .ecv-variant-btn .ecv-variant-name,
+.elementor-widget-container .ecv-variant-btn .ecv-variant-name,
+.elementor .ecv-variant-btn .ecv-variant-name {
+    padding: 0 !important;
+    font-weight: inherit !important;
+    line-height: 1.2 !important;
+    font-size: 0.75em !important;
+    display: block !important;
+    text-align: center !important;
+    word-wrap: break-word !important;
+    max-width: 100% !important;
+}
+
+body #ecv-variation-details,
+.elementor-widget-container #ecv-variation-details,
+.elementor #ecv-variation-details { 
+    margin-top: 18px !important;
+    font-size: 1.1em !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    clear: both !important;
+}
+
+body .ecv-detail-row,
+.elementor-widget-container .ecv-detail-row,
+.elementor .ecv-detail-row { 
+    margin-bottom: 10px !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body .ecv-detail-row strong,
+.elementor-widget-container .ecv-detail-row strong,
+.elementor .ecv-detail-row strong {
+    display: inline-block !important;
+    min-width: 80px !important;
+}
+
+.price .na {
+    color: #999;
+    font-style: italic;
+}
+
+body .ecv-variant-group,
+.elementor-widget-container .ecv-variant-group,
+.elementor .ecv-variant-group { 
+    margin-bottom: 10px !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body .ecv-variant-group-label,
+.elementor-widget-container .ecv-variant-group-label,
+.elementor .ecv-variant-group-label {
+    font-size: 1em !important;
+    font-weight: 500 !important;
+    color: #444 !important;
+    margin-bottom: 4px !important;
+    margin-top: 8px !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Price display area */
+body #ecv-price-display,
+.elementor-widget-container #ecv-price-display,
+.elementor #ecv-price-display {
+    margin-top: 15px !important;
+    font-size: 1.3em !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    padding: 10px !important;
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    clear: both !important;
+}
+
+body #ecv-price-display .price del,
+.elementor-widget-container #ecv-price-display .price del,
+.elementor #ecv-price-display .price del {
+    color: #999 !important;
+    font-weight: normal !important;
+    margin-right: 8px !important;
+}
+
+body #ecv-price-display .price ins,
+.elementor-widget-container #ecv-price-display .price ins,
+.elementor #ecv-price-display .price ins {
+    color: #cc1818 !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
+
+body .ecv-price-label,
+.elementor-widget-container .ecv-price-label,
+.elementor .ecv-price-label {
+    color: #666 !important;
+    font-weight: normal !important;
+    margin-right: 8px !important;
+}
+
+/* Variant image display */
+body #ecv-variant-image,
+.elementor-widget-container #ecv-variant-image,
+.elementor #ecv-variant-image {
+    margin-bottom: 15px !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    clear: both !important;
+}
+
+body #ecv-variant-image img,
+.elementor-widget-container #ecv-variant-image img,
+.elementor #ecv-variant-image img {
+    max-width: 150px !important;
+    border: 2px solid #000 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+body #ecv-variant-image img:hover,
+.elementor-widget-container #ecv-variant-image img:hover,
+.elementor #ecv-variant-image img:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
+    transform: scale(1.02) !important;
+}
+
+/* Order details styling */
+.ecv-order-item-details {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border-left: 4px solid #0073aa;
+}
+
+.ecv-order-item-details h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.ecv-order-item-details img {
+    max-width: 120px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+/* Cart item data styling */
+.woocommerce-cart-form .shop_table .cart_item .product-name dl {
+    margin: 5px 0 0 0;
+}
+
+.woocommerce-cart-form .shop_table .cart_item .product-name dl dt {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.woocommerce-cart-form .shop_table .cart_item .product-name dl dd {
+    margin: 0 0 5px 0;
+}
+
+.woocommerce-cart-form .shop_table .cart_item .product-name dl dd img {
+    max-width: 80px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+/* Layout compatibility for product summary (flex/grid themes) */
+.single-product .summary #ecv-frontend-variations,
+.single-product .summary #ecv-variation-details,
+.single-product .summary #ecv-price-display {
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 100% !important;
+	flex: 0 0 100% !important;
+	grid-column: 1 / -1 !important;
+	display: block !important;
+	clear: both !important;
+}
+
+/* Ensure Woo price stays on its own row when themes use flex/grid */
+.single-product .summary .price {
+	width: 100% !important;
+	max-width: 100% !important;
+	flex: 0 0 100% !important;
+	grid-column: 1 / -1 !important;
+	display: block !important;
+}
+
+/* ========================================= */
+/* ELEMENTOR PRO SPECIFIC COMPATIBILITY FIXES */
+/* ========================================= */
+
+/* Override Elementor's flex/grid layouts for our plugin */
+.elementor-widget-container #ecv-frontend-variations,
+.elementor-section #ecv-frontend-variations,
+.elementor-column #ecv-frontend-variations,
+.elementor-widget #ecv-frontend-variations {
+    flex-basis: 100% !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    flex-grow: 1 !important;
+    flex-shrink: 1 !important;
+    order: initial !important;
+    align-self: stretch !important;
+}
+
+/* Armac Martin layout for Elementor */
+.elementor-widget-container .ecv-button-variants,
+.elementor-section .ecv-button-variants,
+.elementor-column .ecv-button-variants {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+}
+
+.elementor-widget-container .ecv-variant-btn,
+.elementor-section .ecv-variant-btn,
+.elementor-column .ecv-variant-btn {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    width: 130px !important;
+    max-width: 130px !important;
+    min-width: 130px !important;
+    height: 80px !important;
+    flex: 0 0 130px !important;
+}
+
+/* Reset any Elementor typography that might affect our labels */
+.elementor-widget-container .ecv-attr-label,
+.elementor-section .ecv-attr-label,
+.elementor-column .ecv-attr-label {
+    font-family: inherit !important;
+    line-height: 1.4 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    font-style: normal !important;
+}
+
+/* Prevent Elementor's button styles from affecting our buttons */
+.elementor-widget-container .ecv-variant-btn,
+.elementor-section .ecv-variant-btn,
+.elementor-column .ecv-variant-btn {
+    background-image: none !important;
+    background-gradient: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+.elementor-widget-container .ecv-variant-btn:hover,
+.elementor-section .ecv-variant-btn:hover,
+.elementor-column .ecv-variant-btn:hover {
+    background-image: none !important;
+    background-gradient: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    transform: none !important;
+}
+
+.elementor-widget-container .ecv-variant-btn.active,
+.elementor-section .ecv-variant-btn.active,
+.elementor-column .ecv-variant-btn.active {
+    background-image: none !important;
+    background-gradient: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    transform: none !important;
+}
+
+/* Fix radio button styling in Elementor */
+.elementor-widget-container .ecv-radio-label,
+.elementor-section .ecv-radio-label,
+.elementor-column .ecv-radio-label {
+    background-image: none !important;
+    background-gradient: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    outline: none !important;
+    margin-right: 15px !important;
+    margin-bottom: 10px !important;
+}
+
+/* Fix dropdown styling in Elementor */
+.elementor-widget-container .ecv-variants-select,
+.elementor-section .ecv-variants-select,
+.elementor-column .ecv-variants-select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23666" d="m2 0-2 2h4zm0 5 2-2h-4z"/></svg>') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+    padding-right: 40px !important;
+}
+
+/* Prevent Elementor spacing from affecting our components */
+.elementor-widget-container .ecv-attr-group:not(:last-child) {
+    margin-bottom: 18px !important;
+}
+
+/* Ensure proper stacking context */
+.elementor-widget-container #ecv-frontend-variations {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Mobile responsiveness for Armac Martin design */
+@media (max-width: 768px) {
+    .elementor-widget-container .ecv-button-variants {
+        gap: 8px !important;
+        justify-content: center !important;
+    }
+    
+    .elementor-widget-container .ecv-variant-btn {
+        width: 110px !important;
+        min-width: 110px !important;
+        max-width: 110px !important;
+        height: 70px !important;
+        padding: 8px !important;
+        font-size: 0.8em !important;
+    }
+    
+    body .ecv-variant-btn .ecv-image-container,
+    .elementor-widget-container .ecv-variant-btn .ecv-image-container {
+        width: 40px !important;
+        height: 40px !important;
+        margin-bottom: 6px !important;
+    }
+    
+    body .ecv-variant-btn img,
+    .elementor-widget-container .ecv-variant-btn img {
+        max-width: 40px !important;
+        max-height: 40px !important;
+    }
+    
+    .elementor-widget-container .ecv-radio-variants {
+        line-height: 1.8 !important;
+    }
+    
+    .elementor-widget-container .ecv-radio-label {
+        margin-right: 15px !important;
+        margin-bottom: 8px !important;
+        padding: 6px 10px !important;
+        font-size: 0.9em !important;
+    }
+    
+    .elementor-widget-container .ecv-variants-select {
+        max-width: 100% !important;
+    }
+}
+
+/* Critical Price Display Fixes */
+body .price,
+.elementor-widget-container .price,
+.elementor .price,
+body #ecv-price-display,
+.elementor-widget-container #ecv-price-display,
+.elementor #ecv-price-display {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Ensure created price elements are visible */
+.ecv-created-price,
+.ecv-injected-price {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin: 10px 0 !important;
+    font-size: 1.25em !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+/* Override any theme hiding of prices */
+body .woocommerce-Price-amount,
+.elementor-widget-container .woocommerce-Price-amount,
+body .woocommerce-Price-currencySymbol,
+.elementor-widget-container .woocommerce-Price-currencySymbol {
+    display: inline !important;
+    visibility: visible !important;
+}
+
+/* Group-Based Pricing Styles */
+body .ecv-group-section,
+.elementor-widget-container .ecv-group-section,
+.elementor .ecv-group-section {
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+    background: #f9f9f9 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body .ecv-group-title,
+.elementor-widget-container .ecv-group-title,
+.elementor .ecv-group-title {
+    font-size: 1.2em !important;
+    font-weight: 700 !important;
+    margin-bottom: 10px !important;
+    color: #333 !important;
+}
+
+body .ecv-group-image,
+.elementor-widget-container .ecv-group-image,
+.elementor .ecv-group-image {
+    margin-bottom: 10px !important;
+}
+
+body .ecv-group-image img,
+.elementor-widget-container .ecv-group-image img,
+.elementor .ecv-group-image img {
+    max-width: 100px !important;
+    height: auto !important;
+    border-radius: 4px !important;
+    border: 1px solid #ddd !important;
+}
+
+body .ecv-group-price,
+.elementor-widget-container .ecv-group-price,
+.elementor .ecv-group-price {
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+    color: #007cba !important;
+    margin-bottom: 15px !important;
+}
+
+body .ecv-group-variations,
+.elementor-widget-container .ecv-group-variations,
+.elementor .ecv-group-variations {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+body .ecv-group-variation,
+.elementor-widget-container .ecv-group-variation,
+.elementor .ecv-group-variation {
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    transition: all 0.3s ease !important;
+}
+
+body .ecv-group-variation:hover,
+.elementor-widget-container .ecv-group-variation:hover,
+.elementor .ecv-group-variation:hover {
+    border-color: #007cba !important;
+    background: #f0f8ff !important;
+}
+
+body .ecv-group-variation input[type="radio"],
+.elementor-widget-container .ecv-group-variation input[type="radio"],
+.elementor .ecv-group-variation input[type="radio"] {
+    margin-right: 10px !important;
+    transform: scale(1.2) !important;
+}
+
+body .ecv-group-variation label,
+.elementor-widget-container .ecv-group-variation label,
+.elementor .ecv-group-variation label {
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+body .ecv-variation-thumb,
+.elementor-widget-container .ecv-variation-thumb,
+.elementor .ecv-variation-thumb {
+    max-width: 30px !important;
+    height: auto !important;
+    margin-left: 10px !important;
+    border-radius: 2px !important;
+    border: 1px solid #ddd !important;
+}
+
+/* Cart & Checkout Image Fixes */
+.woocommerce-cart .cart_item .product-thumbnail img,
+.woocommerce-checkout .checkout .product-thumbnail img,
+.woocommerce table.shop_table .product-thumbnail img {
+    width: 64px !important;
+    height: 64px !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    border: 1px solid #ddd !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Ensure cart thumbnails are not hidden */
+.woocommerce-cart .cart_item .product-thumbnail,
+.woocommerce-checkout .checkout .product-thumbnail,
+.woocommerce table.shop_table .product-thumbnail {
+    width: 64px !important;
+    height: 64px !important;
+    display: table-cell !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+/* Cart thumbnail container fixes */
+.woocommerce table.shop_table th.product-thumbnail,
+.woocommerce table.shop_table td.product-thumbnail {
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    padding: 8px !important;
+    text-align: center !important;
+}
+
+/* Force visibility for variant images in cart */
+.woocommerce .cart_item .product-thumbnail img[src*="http"],
+.woocommerce .checkout .product-thumbnail img[src*="http"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+/* Demo Section Specific Styling - Armac Martin Clean Design */
+body #ecv-demo-lock .ecv-variants-select,
+.elementor-widget-container #ecv-demo-lock .ecv-variants-select,
+.elementor #ecv-demo-lock .ecv-variants-select {
+    width: 100% !important;
+    max-width: 300px !important;
+    padding: 8px 30px 8px 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    border-radius: 0 !important;
+    font-size: 1em !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    font-family: inherit !important;
+    line-height: 1.5 !important;
+    margin: 8px 0 !important;
+    color: #333 !important;
+    font-weight: 400 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23999" d="m2 0-2 2h4zm0 5 2-2h-4z"/></svg>') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 8px center !important;
+    background-size: 10px !important;
+}
+
+body #ecv-demo-lock .ecv-variants-select:focus,
+.elementor-widget-container #ecv-demo-lock .ecv-variants-select:focus,
+.elementor #ecv-demo-lock .ecv-variants-select:focus {
+    outline: none !important;
+    border-bottom-color: #333 !important;
+    background-color: rgba(0,0,0,0.02) !important;
+}
+
+body #ecv-demo-lock .ecv-variants-select:hover,
+.elementor-widget-container #ecv-demo-lock .ecv-variants-select:hover,
+.elementor #ecv-demo-lock .ecv-variants-select:hover {
+    border-bottom-color: #666 !important;
+    background-color: rgba(0,0,0,0.01) !important;
+}
+
+body #ecv-demo-lock .ecv-attr-group,
+.elementor-widget-container #ecv-demo-lock .ecv-attr-group,
+.elementor #ecv-demo-lock .ecv-attr-group {
+    margin-bottom: 20px !important;
+}
+
+body #ecv-demo-lock .ecv-attr-label,
+.elementor-widget-container #ecv-demo-lock .ecv-attr-label,
+.elementor #ecv-demo-lock .ecv-attr-label {
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+    font-size: 1.1em !important;
+    color: #333 !important;
+    display: block !important;
+}
+
+/* Demo section nested area styling - Clean Design */
+body #ecv-lock-nested,
+.elementor-widget-container #ecv-lock-nested,
+.elementor #ecv-lock-nested {
+    padding: 20px 0 0 0 !important;
+    background: transparent !important;
+    border: none !important;
+    margin-top: 15px !important;
+    border-left: 2px solid #f0f0f0 !important;
+    padding-left: 15px !important;
+}
+
+/* Demo buttons use global styling - no overrides needed */
+
+/* Mobile Responsive for Group Pricing */
+@media (max-width: 768px) {
+    body .ecv-group-section,
+    .elementor-widget-container .ecv-group-section,
+    .elementor .ecv-group-section {
+        padding: 15px !important;
+    }
+    
+    body .ecv-group-title,
+    .elementor-widget-container .ecv-group-title,
+    .elementor .ecv-group-title {
+        font-size: 1.1em !important;
+    }
+    
+    body .ecv-group-variation,
+    .elementor-widget-container .ecv-group-variation,
+    .elementor .ecv-group-variation {
+        padding: 8px !important;
+    }
+    
+    /* Mobile cart images */
+    .woocommerce-cart .cart_item .product-thumbnail img,
+    .woocommerce-checkout .checkout .product-thumbnail img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .woocommerce table.shop_table th.product-thumbnail,
+    .woocommerce table.shop_table td.product-thumbnail {
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+    }
+    
+    /* Mobile responsive for demo section */
+    body #ecv-demo-lock .ecv-variants-select,
+    .elementor-widget-container #ecv-demo-lock .ecv-variants-select,
+    .elementor #ecv-demo-lock .ecv-variants-select {
+        max-width: 100% !important;
+        font-size: 0.9em !important;
+    }
+    
+    /* Demo buttons use global mobile styling */
+    
+    body #ecv-lock-nested,
+    .elementor-widget-container #ecv-lock-nested,
+    .elementor #ecv-lock-nested {
+        padding: 15px 0 0 0 !important;
+        padding-left: 10px !important;
+    }
+}
