@@ -43,7 +43,8 @@ function ecv_process_import_csv($file_path, $update_existing, $create_new, $dry_
         'skipped' => 0,
         'errors' => array(),
         'warnings' => array(),
-        'success' => array()
+        'success' => array(),
+        'extra_fields_imported' => 0
     );
     
     // Check if this is the new unified format
@@ -156,9 +157,15 @@ function ecv_process_import_csv($file_path, $update_existing, $create_new, $dry_
                 if ($group_result['action'] === 'created') {
                     $results['created']++;
                     $results['success'][] = "Product created with " . count($group['variations']) . " variation(s) - {$group_result['message']}";
+                    if (!empty($group_result['extra_fields_imported'])) {
+                        $results['extra_fields_imported']++;
+                    }
                 } elseif ($group_result['action'] === 'updated') {
                     $results['updated']++;
                     $results['success'][] = "Product updated with " . count($group['variations']) . " variation(s) - {$group_result['message']}";
+                    if (!empty($group_result['extra_fields_imported'])) {
+                        $results['extra_fields_imported']++;
+                    }
                 } elseif ($group_result['action'] === 'skipped') {
                     $results['skipped']++;
                     $results['warnings'][] = "Product skipped - {$group_result['message']}";
@@ -348,7 +355,14 @@ function ecv_create_product_from_csv($data, $header_map) {
     // Set custom variant data
     ecv_set_variant_data_from_csv($product_id, $data, $header_map);
     
-    return array('action' => 'created', 'message' => $product->get_name() . " (ID: {$product_id})");
+    // Import product extra fields
+    $extra_fields_imported = ecv_import_product_extra_fields_from_csv($product_id, $data, $header_map);
+    
+    return array(
+        'action' => 'created', 
+        'message' => $product->get_name() . " (ID: {$product_id})",
+        'extra_fields_imported' => $extra_fields_imported
+    );
 }
 
 function ecv_update_product_from_csv($product, $data, $header_map) {
@@ -366,7 +380,14 @@ function ecv_update_product_from_csv($product, $data, $header_map) {
     // Update custom variant data
     ecv_set_variant_data_from_csv($product->get_id(), $data, $header_map);
     
-    return array('action' => 'updated', 'message' => $product->get_name() . " (ID: {$product->get_id()})");
+    // Import product extra fields
+    $extra_fields_imported = ecv_import_product_extra_fields_from_csv($product->get_id(), $data, $header_map);
+    
+    return array(
+        'action' => 'updated', 
+        'message' => $product->get_name() . " (ID: {$product->get_id()})",
+        'extra_fields_imported' => $extra_fields_imported
+    );
 }
 
 
@@ -494,6 +515,131 @@ function ecv_set_product_data_from_csv($product, $data, $header_map) {
     } else {
         error_log('ECV Import: No gallery images column found or empty. Header map keys: ' . print_r(array_keys($header_map), true));
     }
+}
+
+function ecv_import_product_extra_fields_from_csv($product_id, $data, $header_map) {
+    // Import dynamic extra fields from CSV
+    // Supports multiple column formats:
+    // 1. New dynamic format: "Extra:key|type" (e.g., "Extra:banner_image|image")
+    // 2. Legacy patterns: Extra_Image_1, Banner_Image, etc.
+    
+    error_log('ECV Import Extra Fields: Starting for product ID ' . $product_id);
+    error_log('ECV Import Extra Fields: Header map: ' . print_r($header_map, true));
+    error_log('ECV Import Extra Fields: Data row: ' . print_r($data, true));
+    
+    $extra_fields = array();
+    $fields_imported = false;
+    
+    // List of standard WooCommerce/product columns to exclude
+    $excluded_columns = array(
+        'id', 'name', 'slug', 'sku', 'description', 'short description',
+        'regular price', 'sale price', 'stock status', 'stock quantity',
+        'categories', 'tags', 'status', 'main product image', 'main image url',
+        'gallery images', 'product image', 'images', 'image',
+        'has custom variants', 'variant combination id', 'variant sku',
+        'variant price', 'variant sale price', 'variant stock', 'variant enabled',
+        'variant attributes', 'attribute names', 'attribute values',
+        'attribute groups', 'variant groups', 'variant main image',
+        'variant attribute images', 'enable cross group', 'groups definition',
+        'combination name', 'combination price', 'combination sale price',
+        'combination stock', 'combination image', 'combination description',
+        'group button images'
+    );
+    
+    // Scan all CSV columns for extra field patterns
+    foreach ($header_map as $column_name => $column_index) {
+        error_log('ECV Import Extra Fields: Checking column "' . $column_name . '" at index ' . $column_index);
+        
+        // Skip excluded standard columns
+        if (in_array($column_name, $excluded_columns)) {
+            error_log('ECV Import Extra Fields: Column "' . $column_name . '" is a standard column, skipping');
+            continue;
+        }
+        
+        $field_value = isset($data[$column_index]) ? trim($data[$column_index]) : '';
+        
+        if (empty($field_value)) {
+            error_log('ECV Import Extra Fields: Column "' . $column_name . '" has empty value, skipping');
+            continue; // Skip empty values
+        }
+        
+        error_log('ECV Import Extra Fields: Column "' . $column_name . '" has value: ' . substr($field_value, 0, 100));
+        
+        // Detect field type and key from column name
+        $field_key = null;
+        $field_type = null;
+        
+        // NEW PATTERN: Extra:key|type format (e.g., "Extra:banner_image|image", "Extra:feature_text|text")
+        // This is the RECOMMENDED format and has highest priority
+        if (preg_match('/^extra\s*:\s*([a-z0-9_]+)\s*\|\s*(image|text|pdf)$/i', $column_name, $matches)) {
+            $field_key = sanitize_key($matches[1]);
+            $field_type = strtolower($matches[2]);
+            error_log('ECV Import: ✓ Detected NEW dynamic format - Column: ' . $column_name . ', Key: ' . $field_key . ', Type: ' . $field_type);
+        }
+        // Pattern 1: extra_image_1, extra_text_1, extra_pdf_1 (must start with "extra")
+        elseif (preg_match('/^extra[_\s]+(image|text|pdf)[_\s]+(\d+)$/i', $column_name, $matches)) {
+            $field_type = strtolower($matches[1]);
+            $field_key = 'extra_' . $field_type . '_' . $matches[2];
+            error_log('ECV Import: ✓ Detected legacy numbered format - Column: ' . $column_name . ', Key: ' . $field_key . ', Type: ' . $field_type);
+        }
+        // Pattern 2: Columns with _image, _text, _pdf suffix (but NOT standard columns)
+        // Only process if column name suggests it's a custom field (contains specific keywords)
+        elseif (preg_match('/^(banner|feature|hero|promo|spec|detail|custom|extra)[_\s]+(.+?)[_\s]+(image|text|pdf)$/i', $column_name, $matches)) {
+            $prefix = sanitize_key($matches[1] . '_' . $matches[2]);
+            $field_type = strtolower($matches[3]);
+            $field_key = $prefix . '_' . $field_type;
+            error_log('ECV Import: ✓ Detected custom named format - Column: ' . $column_name . ', Key: ' . $field_key . ', Type: ' . $field_type);
+        }
+        // Pattern 3: Simple custom names with type suffix (banner_image, feature_text, etc.)
+        // Only if they start with known custom field prefixes
+        elseif (preg_match('/^(banner|feature|hero|promo|spec|detail|custom)[_\s]+(image|text|pdf)$/i', $column_name, $matches)) {
+            $prefix = sanitize_key($matches[1]);
+            $field_type = strtolower($matches[2]);
+            $field_key = $prefix . '_' . $field_type;
+            error_log('ECV Import: ✓ Detected simple custom format - Column: ' . $column_name . ', Key: ' . $field_key . ', Type: ' . $field_type);
+        }
+        else {
+            // Column doesn't match any extra field pattern
+            error_log('ECV Import Extra Fields: Column "' . $column_name . '" does not match any extra field pattern, skipping');
+            continue;
+        }
+        
+        // Add field if we detected it
+        if ($field_key && $field_type) {
+            $extra_fields[] = array(
+                'field_key' => $field_key,
+                'field_type' => $field_type,
+                'field_value' => $field_value
+            );
+            
+            error_log('ECV Import: Found extra field - Key: ' . $field_key . ', Type: ' . $field_type . ', Value: ' . substr($field_value, 0, 50) . '...');
+        }
+    }
+    
+    // Save extra fields if any were found
+    if (!empty($extra_fields)) {
+        error_log('ECV Import Extra Fields: About to save ' . count($extra_fields) . ' fields: ' . print_r($extra_fields, true));
+        ecv_save_product_extra_fields($product_id, $extra_fields);
+        error_log('ECV Import: ✓ Saved ' . count($extra_fields) . ' extra fields for product ' . $product_id);
+        
+        // Mark product as having CSV-imported fields
+        update_post_meta($product_id, '_ecv_imported_from_csv', current_time('mysql'));
+        
+        // Verify they were saved
+        $saved_fields = ecv_get_product_extra_fields($product_id);
+        error_log('ECV Import Extra Fields: Verification - Retrieved ' . count($saved_fields) . ' fields from database: ' . print_r($saved_fields, true));
+        
+        if (count($saved_fields) === count($extra_fields)) {
+            error_log('ECV Import Extra Fields: ✓✓✓ SUCCESS! All fields verified in database!');
+            $fields_imported = true;
+        } else {
+            error_log('ECV Import Extra Fields: ⚠️ WARNING! Field count mismatch. Saved: ' . count($extra_fields) . ', Retrieved: ' . count($saved_fields));
+        }
+    } else {
+        error_log('ECV Import Extra Fields: No extra fields found to save for product ' . $product_id);
+    }
+    
+    return $fields_imported;
 }
 
 function ecv_set_variant_data_from_csv($product_id, $data, $header_map) {
@@ -952,6 +1098,15 @@ function ecv_display_import_results($results, $dry_run) {
     echo sprintf(__('Skipped: %d products', 'exp-custom-variations'), $results['skipped']) . '<br/>';
     echo sprintf(__('Errors: %d', 'exp-custom-variations'), count($results['errors']));
     echo '</p></div>';
+    
+    // Extra Fields Summary
+    if (!empty($results['extra_fields_imported'])) {
+        echo '<div class="notice notice-success" style="border-left-color: #28a745;"><p>';
+        echo '<strong>✅ Extra Fields Imported:</strong><br/>';
+        echo sprintf(__('%d products have extra fields imported from CSV', 'exp-custom-variations'), $results['extra_fields_imported']);
+        echo '<br/><em style="font-size: 12px;">Edit any product to see the "Product Extra Fields (Shortcodes)" metabox with imported fields.</em>';
+        echo '</p></div>';
+    }
 
     // Success messages
     if (!empty($results['success'])) {
@@ -1086,6 +1241,10 @@ function ecv_process_product_grouped_format($group, $update_existing, $create_ne
     
     // Save grouped data as traditional variations for this specific product
     ecv_save_grouped_data_as_traditional($product_id, $grouped_data);
+    
+    // Import product extra fields from CSV
+    error_log('ECV Grouped Format: Importing extra fields for product ID: ' . $product_id);
+    ecv_import_product_extra_fields_from_csv($product_id, $first_row_data, $header_map);
     
     return $result;
 }
@@ -1469,6 +1628,10 @@ function ecv_process_product_cross_group_format($group, $update_existing, $creat
     // Save cross-group data as traditional variations for this specific product (after meta saved)
     ecv_save_grouped_data_as_traditional($product_id, $cross_group_data);
     
+    // Import product extra fields from CSV
+    error_log('ECV Cross-Group Format: Importing extra fields for product ID: ' . $product_id);
+    ecv_import_product_extra_fields_from_csv($product_id, $first_row_data, $header_map);
+    
     return $result;
 }
 
@@ -1802,6 +1965,10 @@ function ecv_process_product_attribute_column_format($group, $update_existing, $
 
     // Save the parsed data AFTER meta is stored
     ecv_save_grouped_data_as_traditional($product_id, $parsed_data['cross_group_data']);
+    
+    // Import product extra fields from CSV
+    error_log('ECV Attribute Column Format: Importing extra fields for product ID: ' . $product_id);
+    ecv_import_product_extra_fields_from_csv($product_id, $first_row_data, $header_map);
     
     return $result;
 }
@@ -2188,6 +2355,10 @@ function ecv_process_product_traditional_format($group, $update_existing, $creat
     foreach ($group['variations'] as $variation) {
         ecv_set_variant_data_from_csv($product_id, $variation['data'], $header_map);
     }
+    
+    // Import product extra fields from CSV
+    error_log('ECV Traditional Format: Importing extra fields for product ID: ' . $product_id);
+    ecv_import_product_extra_fields_from_csv($product_id, $first_row_data, $header_map);
     
     return $result;
 }

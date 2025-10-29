@@ -27,6 +27,11 @@ add_action('wp_enqueue_scripts', function() {
 	wp_enqueue_script('ecv-frontend-js', ECV_URL . 'public/frontend.js', $js_dependencies, $js_ver ?: '1.0', true);
 	wp_enqueue_style('ecv-frontend-css', ECV_URL . 'public/frontend.css', $css_dependencies, $css_ver ?: null);
 	
+	// Enqueue product extra fields CSS
+	$extra_fields_css = ECV_PATH . 'public/product-extra-fields.css';
+	$extra_fields_css_ver = file_exists($extra_fields_css) ? filemtime($extra_fields_css) : '1.0';
+	wp_enqueue_style('ecv-product-extra-fields-css', ECV_URL . 'public/product-extra-fields.css', [], $extra_fields_css_ver);
+	
 	// Localize script with currency symbol
 	wp_localize_script('ecv-frontend-js', 'ecvConfig', array(
 		'currencySymbol' => defined('ECV_CURRENCY_SYMBOL') ? ECV_CURRENCY_SYMBOL : '₹'

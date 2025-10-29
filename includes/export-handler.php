@@ -165,6 +165,12 @@ function ecv_get_csv_headers($include_product_data, $include_variant_data, $incl
     $headers = array_merge($headers, array(
         'Extra Attributes'
     ));
+    
+    // Add product extra fields columns (will be dynamic based on actual data)
+    // We'll add a general note that these are dynamic
+    $headers = array_merge($headers, array(
+        'Product Extra Fields (JSON)'
+    ));
 
     return $headers;
 }
@@ -347,8 +353,34 @@ function ecv_generate_product_row($product, $variations_data, $combination, $inc
     // Add extra attributes data
     $extra_attrs = ecv_get_extra_attrs_data($product->get_id());
     $row[] = ecv_format_extra_attrs_for_export($extra_attrs);
+    
+    // Add product extra fields (format as individual columns with naming pattern)
+    $product_extra_fields = ecv_get_product_extra_fields($product->get_id());
+    $row[] = ecv_format_product_extra_fields_for_export($product_extra_fields);
 
     return $row;
+}
+
+/**
+ * Format product extra fields for CSV export
+ * Format: JSON string containing all fields
+ */
+function ecv_format_product_extra_fields_for_export($extra_fields) {
+    if (empty($extra_fields) || !is_array($extra_fields)) {
+        return '';
+    }
+    
+    // Create a simple format: field_key:field_type:field_value|field_key:field_type:field_value
+    $formatted_fields = array();
+    foreach ($extra_fields as $field) {
+        if (!empty($field['field_key']) && !empty($field['field_value'])) {
+            // Escape pipe and colon characters in values
+            $value = str_replace(array('|', ':'), array('\\|', '\\:'), $field['field_value']);
+            $formatted_fields[] = $field['field_key'] . ':' . $field['field_type'] . ':' . $value;
+        }
+    }
+    
+    return implode('|', $formatted_fields);
 }
 
 /**

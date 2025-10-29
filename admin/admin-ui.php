@@ -1,18 +1,42 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Add meta box
+// Add meta boxes
 add_action('add_meta_boxes', function() {
-    add_meta_box(
-        'ecv_variations_box',
-        __('Custom Variations', 'exp-custom-variations'),
-        'ecv_render_variations_metabox',
-        'product',
-        'normal',
-        'high'
-    );
+    // Custom Variations metabox - Controlled by ECV_SHOW_VARIATIONS_METABOX constant
+    // Set to TRUE in config.php to enable manual variation editing in admin
+    if (defined('ECV_SHOW_VARIATIONS_METABOX') && ECV_SHOW_VARIATIONS_METABOX === true) {
+        add_meta_box(
+            'ecv_variations_box',
+            __('Custom Variations', 'exp-custom-variations'),
+            'ecv_render_variations_metabox',
+            'product',
+            'normal',
+            'high'
+        );
+    }
+    
+    // Add Product Extra Fields metabox - Controlled by ECV_SHOW_EXTRA_FIELDS_METABOX constant
+    if (!defined('ECV_SHOW_EXTRA_FIELDS_METABOX') || ECV_SHOW_EXTRA_FIELDS_METABOX === true) {
+        add_meta_box(
+            'ecv_product_extra_fields_box',
+            __('Product Extra Fields (Shortcodes)', 'exp-custom-variations'),
+            'ecv_render_product_extra_fields_metabox',
+            'product',
+            'normal',
+            'default'
+        );
+    }
 });
 
+/**
+ * Render Custom Variations metabox
+ * 
+ * NOTE: This metabox is currently HIDDEN from the product edit page.
+ * Products are managed via CSV import instead of manual editing.
+ * 
+ * To re-enable this metabox, uncomment the add_meta_box() call above.
+ */
 function ecv_render_variations_metabox($post) {
     wp_nonce_field('ecv_save_variations', 'ecv_variations_nonce');
     $data = ecv_get_variations_data($post->ID);
@@ -26,6 +50,11 @@ function ecv_render_variations_metabox($post) {
     $is_csv_imported = !empty($cross_group_data) && !isset($cross_group_data['groupsDefinition']);
     
     include ECV_PATH . 'admin/metabox-template.php';
+}
+
+function ecv_render_product_extra_fields_metabox($post) {
+    wp_nonce_field('ecv_save_product_extra_fields', 'ecv_product_extra_fields_nonce');
+    include ECV_PATH . 'admin/product-extra-fields-metabox-v2.php';
 }
 
 
@@ -52,6 +81,11 @@ add_action('admin_enqueue_scripts', function($hook) {
             
             wp_enqueue_script('ecv-admin-js', ECV_URL . 'admin/admin.js', $dependencies, $js_version, true);
             wp_enqueue_style('ecv-admin-css', ECV_URL . 'admin/admin.css', [], $css_version);
+            
+            // Enqueue product extra fields scripts
+            $extra_fields_js = ECV_PATH . 'admin/product-extra-fields.js';
+            $extra_fields_js_version = file_exists($extra_fields_js) ? filemtime($extra_fields_js) : '1.0';
+            wp_enqueue_script('ecv-product-extra-fields-js', ECV_URL . 'admin/product-extra-fields.js', ['jquery', 'wp-util'], $extra_fields_js_version, true);
             
             // Localize script with debug info
             wp_localize_script('ecv-admin-js', 'ecvAdminConfig', [
@@ -286,6 +320,46 @@ add_action('save_post_product', function($post_id, $post, $update) {
     }
 
 }, 20, 3); // Priority 20 (after WooCommerce at 10), 3 parameters
+
+// Save product extra fields
+add_action('save_post_product', function($post_id, $post, $update) {
+    // Check if this is our form submission
+    if (!isset($_POST['ecv_product_extra_fields_nonce'])) {
+        return; // Not our form
+    }
+    
+    if (!wp_verify_nonce($_POST['ecv_product_extra_fields_nonce'], 'ecv_save_product_extra_fields')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    
+    // Get arrays from form
+    $keys = isset($_POST['ecv_field_keys']) ? $_POST['ecv_field_keys'] : array();
+    $types = isset($_POST['ecv_field_types']) ? $_POST['ecv_field_types'] : array();
+    $values = isset($_POST['ecv_field_values']) ? $_POST['ecv_field_values'] : array();
+    
+    $fields = array();
+    
+    // Combine arrays into field objects
+    for ($i = 0; $i < count($keys); $i++) {
+        $key = isset($keys[$i]) ? trim($keys[$i]) : '';
+        $type = isset($types[$i]) ? $types[$i] : 'text';
+        $value = isset($values[$i]) ? trim($values[$i]) : '';
+        
+        // Only save if key and value are not empty
+        if (!empty($key) && !empty($value)) {
+            $fields[] = array(
+                'field_key' => sanitize_key($key),
+                'field_type' => sanitize_text_field($type),
+                'field_value' => ($type === 'text') ? wp_kses_post($value) : esc_url_raw($value)
+            );
+        }
+    }
+    
+    // Save fields
+    ecv_save_product_extra_fields($post_id, $fields);
+    error_log('ECV Save: ✓ Product extra fields saved (' . count($fields) . ' fields)');
+    
+}, 25, 3); // Priority 25 (after main variations save)
 
 /**
  * Extract and save attribute display types from cross-group admin data

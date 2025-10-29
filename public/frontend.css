@@ -260,16 +260,6 @@ body .ecv-variant-btn.ecv-reset-option,
     cursor: pointer !important;
 }
 
-/* Hide ONLY the variation details summary (the text showing selected options) */
-div#ecv-variation-details {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
 /* Armac Martin style image layout - image above text */
 body .ecv-variant-btn .ecv-image-container,
 .elementor-widget-container .ecv-variant-btn .ecv-image-container,
@@ -399,7 +389,7 @@ body .ecv-variant-btn .ecv-variant-name,
     padding: 0 !important;
     font-weight: inherit !important;
     line-height: 1.2 !important;
-    font-size: 0.75em !important;
+    font-size: 0.95em !important;
     display: block !important;
     text-align: center !important;
     word-wrap: break-word !important;
@@ -414,6 +404,7 @@ body #ecv-variation-details,
     width: 100% !important;
     box-sizing: border-box !important;
     clear: both !important;
+    display:none;
 }
 
 body .ecv-detail-row,
@@ -465,9 +456,9 @@ body #ecv-price-display,
     font-size: 1.3em !important;
     font-weight: bold !important;
     color: #333 !important;
-    padding: 10px !important;
+    /* padding: 10px !important;
     background: #f9f9f9 !important;
-    border: 1px solid #ddd !important;
+    border: 1px solid #ddd !important; */
     border-radius: 6px !important;
     width: 100% !important;
     box-sizing: border-box !important;
@@ -582,6 +573,7 @@ body #ecv-variant-image img:hover,
 	grid-column: 1 / -1 !important;
 	display: block !important;
 	clear: both !important;
+    display:none;
 }
 
 /* Ensure Woo price stays on its own row when themes use flex/grid */

@@ -2,10 +2,35 @@
 /*
 Plugin Name: Exp Custom Variations
 Description: Custom product attributes and dynamic pricing for WooCommerce-independent products.
-Version: 1.4.1
+Version: 1.5.2
 Author: Chirag Bhardwaj
 
 Changelog:
+v1.5.2 - ADMIN PANEL IMPROVEMENTS: Configurable metabox visibility
+         * Added config.php for centralized plugin configuration
+         * Custom Variations metabox now hidden by default (products managed via CSV)
+         * Easy toggle to show/hide metaboxes via configuration constants
+         * Improved admin interface - cleaner product edit page
+         * Configuration documentation included
+v1.5.1 - ENHANCED CSV IMPORT: Added dynamic column format for extra fields
+         * NEW CSV format: Extra:field_key|field_type (e.g., Extra:banner_image|image)
+         * Explicit type declaration - no more guessing from file extensions
+         * Cleaner, more organized CSV structure
+         * Works alongside legacy formats for backward compatibility
+         * Comprehensive documentation with examples and guides
+         * Sample CSV files included for quick start
+         * Automatic exclusion of standard WooCommerce columns
+         * Visual verification tools (check-extra-fields.php)
+         * Enhanced debug logging and import results display
+v1.5.0 - PRODUCT EXTRA FIELDS: Added unlimited custom fields system with shortcode support
+         * New "Product Extra Fields" metabox in admin for unlimited fields per product
+         * Three field types: Image, Text, PDF with media uploader integration
+         * Flexible shortcode system: [ecv_field key="field_key"] for Elementor
+         * Smart CSV import/export with auto-detection (Extra_Image_1, Banner_Image patterns)
+         * Conditional display shortcode: [ecv_field_exists]
+         * Display all fields shortcode: [ecv_all_fields]
+         * Full Elementor compatibility with responsive styling
+         * Product-specific content management for banners, PDFs, and text
 v1.4.1 - IMPORT/EXPORT EXTRA ATTRIBUTES: Added CSV import/export support for extra attributes
          * Export products with extra attributes and pricing to CSV
          * Import extra attributes with prices from CSV files
@@ -59,6 +84,11 @@ define( 'ECV_CURRENCY_SYMBOL', '₹' ); // Currency symbol used in price display
 
 date_default_timezone_set('UTC');
 
+// Load configuration
+if (file_exists(ECV_PATH . 'config.php')) {
+    require_once ECV_PATH . 'config.php';
+}
+
 // Load includes
 require_once ECV_PATH . 'includes/data-handler.php';
 require_once ECV_PATH . 'includes/helpers.php';
@@ -73,6 +103,7 @@ if ( is_admin() ) {
 // Public
 require_once ECV_PATH . 'public/frontend-ui.php';
 require_once ECV_PATH . 'public/extra-ui.php';
+require_once ECV_PATH . 'public/product-extra-fields-shortcodes.php';
 
 // Activation hook (for custom table if needed)
 // register_activation_hook( __FILE__, 'ecv_activate_plugin' );

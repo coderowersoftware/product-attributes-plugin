@@ -21,6 +21,9 @@ const ECV_CROSS_GROUP_DATA_META_KEY = '_ecv_cross_group_data';
 // Meta key for separate extra attributes (independent panel)
 const ECV_EXTRA_ATTRS_META_KEY = '_ecv_extra_attrs_data';
 
+// Meta key for product-level extra fields (dynamic, flexible system)
+const ECV_PRODUCT_EXTRA_FIELDS_META_KEY = '_ecv_product_extra_fields';
+
 function ecv_get_variations_data( $post_id ) {
     $data = get_post_meta( $post_id, ECV_META_KEY, true );
     return is_array( $data ) ? $data : [];
@@ -687,6 +690,68 @@ function ecv_generate_cross_group_combinations( $cross_group_data ) {
     }
     
     return $combinations;
+}
+
+// Product-level extra fields accessors (Dynamic system)
+// Fields format: array of ['field_key' => 'unique_key', 'field_type' => 'image|text|pdf', 'field_value' => 'value']
+
+function ecv_get_product_extra_fields($post_id) {
+    $fields = get_post_meta($post_id, ECV_PRODUCT_EXTRA_FIELDS_META_KEY, true);
+    return is_array($fields) ? $fields : array();
+}
+
+function ecv_save_product_extra_fields($post_id, $fields) {
+    if (empty($fields) || !is_array($fields)) {
+        delete_post_meta($post_id, ECV_PRODUCT_EXTRA_FIELDS_META_KEY);
+    } else {
+        update_post_meta($post_id, ECV_PRODUCT_EXTRA_FIELDS_META_KEY, $fields);
+    }
+}
+
+function ecv_get_product_extra_field_by_key($post_id, $field_key) {
+    $fields = ecv_get_product_extra_fields($post_id);
+    foreach ($fields as $field) {
+        if (isset($field['field_key']) && $field['field_key'] === $field_key) {
+            return $field;
+        }
+    }
+    return null;
+}
+
+function ecv_add_or_update_product_extra_field($post_id, $field_key, $field_type, $field_value) {
+    $fields = ecv_get_product_extra_fields($post_id);
+    $found = false;
+    
+    // Update existing field
+    foreach ($fields as &$field) {
+        if (isset($field['field_key']) && $field['field_key'] === $field_key) {
+            $field['field_type'] = $field_type;
+            $field['field_value'] = $field_value;
+            $found = true;
+            break;
+        }
+    }
+    unset($field);
+    
+    // Add new field if not found
+    if (!$found) {
+        $fields[] = array(
+            'field_key' => $field_key,
+            'field_type' => $field_type,
+            'field_value' => $field_value
+        );
+    }
+    
+    ecv_save_product_extra_fields($post_id, $fields);
+}
+
+function ecv_delete_product_extra_field($post_id, $field_key) {
+    $fields = ecv_get_product_extra_fields($post_id);
+    $fields = array_filter($fields, function($field) use ($field_key) {
+        return !isset($field['field_key']) || $field['field_key'] !== $field_key;
+    });
+    $fields = array_values($fields); // Re-index array
+    ecv_save_product_extra_fields($post_id, $fields);
 }
 
 // Convert Excel-like admin UI format to combination format (like import does)
